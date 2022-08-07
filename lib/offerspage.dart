@@ -26,8 +26,22 @@ class Offer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Text(title),
-      Text(description),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Text(
+          title,
+          style: Theme.of(context).textTheme.headline5,
+        )),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Text(
+          description,
+          style: Theme.of(context).textTheme.headline6,
+        )),
+      ),
     ]);
   }
 }
