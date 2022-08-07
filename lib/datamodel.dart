@@ -19,11 +19,11 @@ class Product {
   });
 }
 
-class Category {
+class CategoryModel {
   String name;
   List<Product> products;
 
-  Category({required this.name, required this.products});
+  CategoryModel({required this.name, required this.products});
 }
 
 class ItemInCart {
