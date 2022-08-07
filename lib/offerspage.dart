@@ -5,15 +5,29 @@ class OffersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Offer(
+      title: "My greatest offer ever",
+      description: "Buy 1, get 10 free",
+    );
   }
 }
 
 class Offer extends StatelessWidget {
-  const Offer({Key? key}) : super(key: key);
+  // Properties
+  final String title;
+  final String description;
+
+  const Offer({
+    Key? key,
+    required this.title,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(children: [
+      Text(title),
+      Text(description),
+    ]);
   }
 }
