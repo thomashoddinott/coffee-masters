@@ -13,14 +13,36 @@ class MenuPage extends StatelessWidget {
       price: 1.25,
       image: "image",
     );
-    return ProductItem(product: p);
+    var q = Product(
+      id: 1,
+      name: "Larger Black Coffee",
+      price: 2.25,
+      image: "image",
+    );
+    return Column(
+      children: [
+        ProductItem(
+          product: p,
+          onAdd: () {},
+        ),
+        ProductItem(
+          product: q,
+          onAdd: () {},
+        ),
+      ],
+    );
   }
 }
 
 class ProductItem extends StatelessWidget {
   final Product product;
+  final Function onAdd;
 
-  const ProductItem({Key? key, required this.product}) : super(key: key);
+  const ProductItem({
+    Key? key,
+    required this.product,
+    required this.onAdd,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +54,36 @@ class ProductItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset("images/black_coffee.png"),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                product.name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("\$${product.price}"),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        product.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("\$${product.price}"),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      onAdd(product);
+                    },
+                    child: const Text("Add"),
+                  ),
+                )
+              ],
+            )
           ],
         ),
       ),
