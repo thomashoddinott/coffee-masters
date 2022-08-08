@@ -5,7 +5,9 @@ class OffersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    var size = MediaQuery.of(context).size;
+    if (size.width > 500) {}
+    return Wrap(
       children: const [
         Offer(
           title: "My greatest offer ever",
