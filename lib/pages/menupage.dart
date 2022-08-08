@@ -11,29 +11,47 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var p = Product(
-      id: 1,
-      name: "Black Coffee",
-      price: 1.25,
-      image: "image",
-    );
-    var q = Product(
-      id: 1,
-      name: "Larger Black Coffee",
-      price: 2.25,
-      image: "image",
-    );
-    return Column(
-      children: [
-        ProductItem(
-          product: p,
-          onAdd: () {},
-        ),
-        ProductItem(
-          product: q,
-          onAdd: () {},
-        ),
-      ],
+    return FutureBuilder(
+      future: dataManager.getMenu(),
+      builder: ((context, snapshot) {
+        if (snapshot.hasData) {
+          // The future has finished, data is ready
+          var categories = snapshot.data! as List<CategoryModel>;
+          return ListView.builder(
+            itemCount: categories.length,
+            itemBuilder: ((context, index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(categories[index].name),
+                  ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: categories[index].products.length,
+                      itemBuilder: (context, prodIndex) {
+                        var product = categories[index].products[prodIndex];
+                        return ProductItem(
+                            product: product,
+                            onAdd: () {
+                              dataManager.cartAdd(product);
+                            });
+                      })
+                ],
+              );
+            }),
+          );
+        } else {
+          if (snapshot.hasError) {
+            // Data is not there, because of an error
+            return const Text("There was en error");
+          } else {
+            // Data is in progress (the future didn't finish)
+            return const CircularProgressIndicator();
+          }
+        }
+      }),
     );
   }
 }
